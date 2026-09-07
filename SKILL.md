@@ -162,6 +162,20 @@ Nothing wrong and nothing to cut: `Lean already. Ship.` and stop.
   edit a fix requires. A deeper fix that is worth doing is a follow-up task, and
   you say so instead of starting it.
 - **"Probably a helper exists for this."** Search and cite it, or drop the finding.
+- **Stopping at the first defect.** One `broken:` finding is a signal that the
+  same class of mistake lives elsewhere in the diff. After fixing it, re-scan
+  every sibling path: a first pass on one diff found a wrong sort key, and the
+  live run it unblocked exposed two more (a list ordered by an irrelevant key,
+  and an error-handling fallback that replaced the real cause with an unrelated
+  message). Unit tests alone found none of the three.
+- **Treating a passing suite as coverage.** A test can pass with the bug present
+  because its fixture leaves the deciding field empty or equal. When a test
+  covers the exact function you suspect and still passes, read the fixture
+  before trusting it.
+- **Reviewing a diff without running the thing end to end.** Mock-based tests
+  exercise the shape of the code, not the data the real API returns. Where a
+  live run is cheap, do one: real API responses are where wrong assumptions
+  about upstream data surface.
 
 ## Verification checklist
 
